@@ -5,6 +5,7 @@ import { makeStyles, shorthands, Button, Dropdown, Option, Spinner, Label, Card,
 import { SettingsRegular } from "@fluentui/react-icons";
 import { useTranslation } from "react-i18next";
 import { AnalysisResult } from "../../types";
+import { getApiUrl, config } from "../../config";
 import "./i18n"; // Initialize i18next
 
 interface AppProps {
@@ -154,7 +155,7 @@ const App: React.FC<AppProps> = () => {
             const textSnippet = documentText.substring(0, 500);
             updateStatus("statusAnalyzing", "yellow", true);
             try {
-              const response = await fetch('http://localhost:3001/api/detect-language', {
+              const response = await fetch(getApiUrl(config.ENDPOINTS.DETECT_LANGUAGE), {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
@@ -222,7 +223,7 @@ const App: React.FC<AppProps> = () => {
         setAnalysisResult(null);
 
         try {
-          const response = await fetch('http://localhost:3001/api/analyze', {
+          const response = await fetch(getApiUrl(config.ENDPOINTS.ANALYZE), {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -277,7 +278,7 @@ const App: React.FC<AppProps> = () => {
         const fullLanguageName = t(`language${selectedLanguage.toUpperCase()}`);
 
         try {
-          const response = await fetch('http://localhost:3001/api/rephrase', {
+          const response = await fetch(getApiUrl(config.ENDPOINTS.REPHRASE), {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
